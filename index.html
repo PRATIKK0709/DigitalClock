@@ -1,3 +1,5 @@
+/* you are looking into my diary if you are reading comments here ;)) */
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,22 +14,22 @@
             font-family: 'Raleway Dots', cursive;
             margin: 0;
             padding: 0;
-            background-color: #000000; /* OLED black for battery savings */
-            color: #e0e0e0; /* Light text color */
+            background-color: #000000;
+            color: #ffffff; 
             text-align: center;
-            overflow: hidden; /* Disable both vertical and horizontal scroll */
+            overflow: hidden; 
         }
 
         header {
             position: fixed;
             top: 0;
             right: 0;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background for header */
+            background-color: rgba(0, 0, 0, 0.9); 
             color: #e0e0e0;
             padding: 20px;
-            text-align: center;
-            backdrop-filter: blur(10px); /* Apply blur for frosted glass effect */
-            z-index: 1; /* Ensure header is above the clock */
+            text-align: right;
+            backdrop-filter: blur(10px);
+            z-index: 1; 
         }
 
         main {
@@ -35,23 +37,25 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Full height of the viewport */
-            padding: 120px 20px 20px 20px; /* Adjusted padding for responsiveness */
+            height: 100vh; 
+            padding: 100px 20px 20px 20px; 
         }
 
         .digital-clock {
-            font-size: 6rem; /* Increased font size */
+            font-size: 6rem; 
+            margin-bottom: 10px;
+        }
+
+        .date-info {
+            font-size: 1.5rem;
             margin-bottom: 20px;
-            color: #ffffff; /* Changed text color to white */
         }
 
         .fullscreen-button {
-            background-color: transparent;
-            border: 2px solid #ffffff; /* White border */
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
+            background-color: transparent; 
+            color: #ffffff; 
+            border: 1px solid #ffffff; 
+            padding: 12px 24px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 10px;
@@ -59,9 +63,13 @@
         }
 
         @media screen and (max-width: 768px) {
-            /* Adjustments for smaller screens */
+
             .digital-clock {
                 font-size: 4rem;
+            }
+
+            .date-info {
+                font-size: 1rem;
             }
 
             .fullscreen-button {
@@ -78,6 +86,7 @@
 
     <main>
         <div class="digital-clock" id="clock"></div>
+        <div class="date-info" id="dateInfo"></div>
     </main>
 
     <script>
@@ -85,6 +94,7 @@
 
         function updateClock() {
             const clockElement = document.getElementById("clock");
+            const dateInfoElement = document.getElementById("dateInfo");
             const currentTime = new Date();
 
             let hours = currentTime.getHours();
@@ -105,6 +115,21 @@
 
             const timeString = `${hours}:${minutes}:${seconds} ${meridiem}`;
             clockElement.textContent = timeString;
+
+            // Get the current day of the week
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dayOfWeek = daysOfWeek[currentTime.getDay()];
+
+            // Get the current month
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const month = months[currentTime.getMonth()];
+
+            // Format the date
+            const dayOfMonth = currentTime.getDate();
+            const year = currentTime.getFullYear();
+
+            const dateString = `${dayOfWeek}, ${month} ${dayOfMonth}, ${year}`;
+            dateInfoElement.textContent = dateString;
         }
 
         function toggleFullScreen() {
