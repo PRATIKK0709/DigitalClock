@@ -13,20 +13,26 @@
             margin: 0;
             padding: 0;
             background-color: #000000; /* you are looking into my diary if you are reading comments here ;)) */
-            color: #ffffff;
+            color: #ffffff; 
             text-align: center;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; 
+            overflow: hidden; 
         }
 
         header {
             position: fixed;
             top: 0;
             right: 0;
-            background-color: rgba(0, 0, 0, 0.9); 
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #e0e0e0;
             padding: 20px;
             text-align: right;
             backdrop-filter: blur(10px); 
-            z-index: 1;
+            z-index: 1; 
+            width: 100%;
         }
 
         main {
@@ -34,19 +40,18 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; 
-            padding: 100px 20px 20px 20px;
         }
 
         .digital-clock {
             font-size: 8rem; 
             margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(226, 246, 255, 0.7); 
         }
 
         .date-info {
             font-size: 1.5rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5); 
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); 
         }
 
         .fullscreen-button {
@@ -56,7 +61,7 @@
             padding: 12px 24px;
             font-size: 16px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: opacity 0.5s ease-out;
             position: fixed;
             top: 20px;
@@ -64,7 +69,7 @@
         }
 
         @media screen and (max-width: 768px) {
-            /* Adjustments for smaller screens */
+
             .digital-clock {
                 font-size: 6rem; 
             }
@@ -91,6 +96,7 @@
         <div class="digital-clock" id="clock"></div>
         <div class="date-info" id="dateInfo"></div>
     </main>
+
 
     <script>
         let buttonTimeout;
