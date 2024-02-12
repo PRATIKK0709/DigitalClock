@@ -12,27 +12,32 @@
             font-family: 'Raleway Dots', cursive;
             margin: 0;
             padding: 0;
-            background-color: #000000; 
-            color: #e0e0e0; 
+            background-color: #000000; /* OLED black for battery savings */
+            color: #e0e0e0; /* Light text color */
             text-align: center;
+            overflow: hidden; /* Disable both vertical and horizontal scroll */
         }
 
         header {
             position: fixed;
             top: 0;
+            left: 0;
             right: 0;
-            background-color: rgba(30, 30, 30, 0.8); 
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background for header */
             color: #e0e0e0;
             padding: 20px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); /* Apply blur for frosted glass effect */
+            z-index: 1; /* Ensure header is above the clock */
         }
 
         main {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh; /* Full height of the viewport */
+            padding: 120px 20px 20px 20px; /* Adjusted padding for responsiveness */
         }
 
         .digital-clock {
@@ -52,6 +57,17 @@
             cursor: pointer;
             border-radius: 10px;
             transition: opacity 0.5s ease-out;
+        }
+
+        @media screen and (max-width: 768px) {
+            /* Adjustments for smaller screens */
+            .digital-clock {
+                font-size: 4rem;
+            }
+
+            .fullscreen-button {
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
@@ -107,22 +123,22 @@
             button.style.opacity = 0;
         }
 
-
+        // Update the clock every second
         setInterval(() => {
             updateClock();
             hideButton();
         }, 1000);
 
-
+        // Initial clock update and hide the button
         updateClock();
         hideButton();
 
-    
+        // Handle button visibility on user activity
         document.addEventListener("mousemove", () => {
             const button = document.getElementById("fullscreenButton");
             button.style.opacity = 1;
 
-
+            // Clear previous timeout and set a new one
             clearTimeout(buttonTimeout);
             buttonTimeout = setTimeout(hideButton, 5000); // Hide after 5 seconds of inactivity
         });
