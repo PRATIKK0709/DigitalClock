@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway+Dots&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway Dots', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e; 
+            color: #e0e0e0; 
+            text-align: center;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: rgba(30, 30, 30, 0.8); 
+            color: #e0e0e0;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        .digital-clock {
+            font-size: 6rem; /* Increased font size */
+            margin-bottom: 20px;
+            color: #ffffff; /* Changed text color to white */
+        }
+
+        .fullscreen-button {
+            background-color: transparent;
+            border: 2px solid #ffffff; /* White border */
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="fullscreen-button" id="fullscreenButton" onclick="toggleFullScreen()">Toggle Fullscreen</button>
+    </header>
+
+    <main>
+        <div class="digital-clock" id="clock"></div>
+    </main>
+
+    <script>
+        let buttonTimeout;
+
+        function updateClock() {
+            const clockElement = document.getElementById("clock");
+            const currentTime = new Date();
+
+            let hours = currentTime.getHours();
+            let minutes = currentTime.getMinutes();
+            let seconds = currentTime.getSeconds();
+            let meridiem = "AM";
+
+            // Convert to 12-hour format and determine AM/PM
+            if (hours > 12) {
+                hours -= 12;
+                meridiem = "PM";
+            }
+
+            // Ensure 2-digit format for hours, minutes, and seconds
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            const timeString = `${hours}:${minutes}:${seconds} ${meridiem}`;
+            clockElement.textContent = timeString;
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function hideButton() {
+            const button = document.getElementById("fullscreenButton");
+            button.style.opacity = 0;
+        }
+
+
+        setInterval(() => {
+            updateClock();
+            hideButton();
+        }, 1000);
+
+
+        updateClock();
+        hideButton();
+
+    
+        document.addEventListener("mousemove", () => {
+            const button = document.getElementById("fullscreenButton");
+            button.style.opacity = 1;
+
+
+            clearTimeout(buttonTimeout);
+            buttonTimeout = setTimeout(hideButton, 5000); // Hide after 5 seconds of inactivity
+        });
+    </script>
+
+</body>
+</html>
